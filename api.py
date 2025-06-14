@@ -3,11 +3,9 @@ import sqlite3
 from datetime import datetime, timedelta
 import time
 
-# Create or connect to SQLite DB
 conn = sqlite3.connect('currency_rates.db')
 cursor = conn.cursor()
 
-# Create table if not exists
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS rates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,7 +19,6 @@ CREATE TABLE IF NOT EXISTS rates (
 ''')
 conn.commit()
 
-# Date range
 start_date = datetime(2000, 1, 1)
 end_date = datetime(2025, 6, 13)
 
@@ -70,12 +67,9 @@ while current_date <= end_date:
     except Exception as e:
         print(f"Error on {date_str}: {e}")
     
-    # Move to next day
     current_date += timedelta(days=1)
     
-    # Respect API rate limits
     time.sleep(0.5)
 
-# Close DB connection
 conn.close()
-print("✅ All done!")
+print("Done!")
